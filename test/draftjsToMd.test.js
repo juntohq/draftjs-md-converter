@@ -107,6 +107,28 @@ describe('draftjsToMd', () => {
     draftjsToMd(raw).should.equal(expectedMarkdown);
   });
 
+  it('converts draftjs blocks to bold markdown when an emoji is the last character in the bolded range', () => {
+    const raw = {
+      blocks: [
+        {
+          text: 'This has an emoji at the end.👍',
+          type: 'unstyled',
+          depth: 0,
+          inlineStyleRanges: [
+            {
+              offset: 0,
+              length: 30,
+              style: 'BOLD'
+            }
+          ],
+          entityRanges: []
+        }
+      ]
+    };
+    const expectedMarkdown = '__This has an emoji at the end.👍__';
+    draftjsToMd(raw).should.equal(expectedMarkdown);
+  });
+
   it('converts nested styles correctly', () => {
     const raw = {
       blocks: [
